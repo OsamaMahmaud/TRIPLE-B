@@ -7,13 +7,14 @@
 
   var LINKS = {
     // قائمة الطعام
-    menu: '#',
+    menu: 'https://triple-b-menu.vortishop.com/',
 
     // السوشيال ميديا
-    facebook:  '#',
-    snapchat:  '#',
-    instagram: '#',
-    twitter:   '#',
+    tiktok:    'https://www.tiktok.com/@tripleb.sa?_r=1&_t=ZS-9AbnGGLPK7B',
+    instagram: 'https://www.instagram.com/tripleb.sa?xtok=MXdicGE3YTJxZWsxaQ==',
+    snapchat:  '#',   // TODO: حط رابط السناب
+    whatsapp:  'https://api.whatsapp.com/send/?phone=966508883644&text&type=phone_number&app_absent=0',
+    // (تم حذف facebook و twitter)
 
     // الفروع
     location: 'https://www.google.com/maps/place/%D8%AA%D8%B1%D8%A8%D9%84+%D8%A8%D9%8A+%D8%A8%D8%B1%D8%AC%D8%B1+TRiPLE-B+BURGER%E2%80%AD/@24.8134585,46.6459592,17z/data=!3m1!4b1!4m6!3m5!1s0x3e2ee51839c45ab9:0xef4dff5d5b8fe02a!8m2!3d24.8134585!4d46.6459592!16s%2Fg%2F11yryhvg5y!18m1!1e1',
