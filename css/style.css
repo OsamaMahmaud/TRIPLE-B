@@ -116,6 +116,34 @@ a:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; 
           mask-position: 0 0, 0 100%;
 }
 
+/* ---------- الموبايل: شطرنج أوضح وأكتر ---------- */
+@media (max-width: 767.98px) {
+  .top,
+  .checker-zone {
+    --checker-color: #1b1b1b;                   /* أفتح عشان يبان على شاشات الموبايل */
+    --checker-cell: clamp(44px, 11vw, 70px);
+  }
+  .top::before {
+    top: 6%;
+    -webkit-mask-image:
+      linear-gradient(to bottom right, transparent 18%, #000 60%),
+      linear-gradient(to top, #000 0%, transparent 30%);
+            mask-image:
+      linear-gradient(to bottom right, transparent 18%, #000 60%),
+      linear-gradient(to top, #000 0%, transparent 30%);
+  }
+  .checker-zone::before {
+    -webkit-mask-image:
+      linear-gradient(to bottom, #000 50%, transparent 100%),
+      linear-gradient(to top right, transparent 42%, #000 82%);
+    -webkit-mask-size: 100% 70%, 100% 80%;
+            mask-image:
+      linear-gradient(to bottom, #000 50%, transparent 100%),
+      linear-gradient(to top right, transparent 42%, #000 82%);
+            mask-size: 100% 70%, 100% 80%;
+  }
+}
+
 /* ---------- Header + Hero ---------- */
 .top { overflow-x: clip; }
 .top__inner { position: relative; padding-top: clamp(1.2rem, 4vw, 2rem); padding-bottom: clamp(1rem, 4vw, 2rem); }
