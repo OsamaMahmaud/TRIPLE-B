@@ -54,24 +54,67 @@ a:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; 
 
 .sep { opacity: .9; margin-inline: .15em; }
 
-/* ---------- خلفية الشطرنج ---------- */
-.bg-pattern {
-  position: absolute;
-  z-index: 0;
-  width: clamp(280px, 70vw, 640px);
-  height: auto;
-  opacity: var(--pattern-opacity);
-  pointer-events: none;
-  user-select: none;
+/* ---------- خلفية الشطرنج ----------
+   3 أجزاء متصلة بنفس المربعات (مش علم سباق):
+   1) فوق في الـ hero  : مثلث على اليمين بيتدرج ويزيد لتحت
+   2) النص (عنوان + أطباق): عرض كامل وأوضح جزء
+   3) تحت (منيو ← توصيل): مثلث زاويته القائمة فوق-يمين، والوتر نازل من فوق-شمال لتحت-يمين
+*/
+.top,
+.checker-zone {
+  --checker-color: #0f0f0f;                     /* لون المربعات الفاتحة فوق الأسود */
+  --checker-cell: clamp(48px, 10.3vw, 104px);   /* حجم المربع الواحد */
+  position: relative;
+  isolation: isolate;                           /* الشطرنج z-index:-1 يفضل ورا المحتوى */
 }
-/* الصورة قطعة ركن: حوافها اليمين والتحت مستقيمة، فبنقلبها حسب الركن */
-.bg-pattern--1 { top: 0;   right: 0; transform: scale(1, -1); }   /* ركن فوق يمين */
-.bg-pattern--2 { top: 30%; left: 0;  transform: scale(-1, 1);     /* يسار */
-  -webkit-mask-image: linear-gradient(to top, transparent, #000 30%);
-          mask-image: linear-gradient(to top, transparent, #000 30%); }
-.bg-pattern--3 { top: 58%; right: 0;                              /* يمين تحت */
-  -webkit-mask-image: linear-gradient(to top, transparent, #000 30%);
-          mask-image: linear-gradient(to top, transparent, #000 30%); }
+/* بيمنع margin العنوان إنه يزق المنطقة لتحت ويسيب فجوة بين الـ hero والشطرنج */
+.checker-zone { display: flow-root; }
+.top::before,
+.checker-zone::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  opacity: var(--pattern-opacity);
+  background-image: repeating-conic-gradient(var(--checker-color) 0 25%, transparent 0 50%);
+  background-size: calc(var(--checker-cell) * 2) calc(var(--checker-cell) * 2);
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+          mask-composite: add;
+}
+
+/* (1) الجزء العلوي: نص الـ hero التحتاني، ملزوق في آخر الـ hero */
+.top::before {
+  top: 12%;
+  bottom: 0;
+  background-position: center bottom;           /* آخر صف يتكمّل مع أول صف في المنطقة اللي بعده */
+  -webkit-mask-image:
+    linear-gradient(to bottom right, transparent 34%, #000 80%),
+    linear-gradient(to top, #000 0%, transparent 28%);
+          mask-image:
+    linear-gradient(to bottom right, transparent 34%, #000 80%),
+    linear-gradient(to top, #000 0%, transparent 28%);
+}
+
+/* (2)+(3) النص + الجزء السفلي */
+.checker-zone::before {
+  top: 0;
+  bottom: 0;
+  background-position: center top;
+  -webkit-mask-image:
+    linear-gradient(to bottom, #000 38%, transparent 100%),                      /* النص: كامل ثم يختفي */
+    linear-gradient(to top right, transparent 66%, #000 97%);                    /* المثلث السفلي */
+  -webkit-mask-size: 100% 60%, 100% 67%;
+  -webkit-mask-position: 0 0, 0 100%;
+          mask-image:
+    linear-gradient(to bottom, #000 38%, transparent 100%),
+    linear-gradient(to top right, transparent 66%, #000 97%);
+          mask-size: 100% 60%, 100% 67%;
+          mask-position: 0 0, 0 100%;
+}
 
 /* ---------- Header + Hero ---------- */
 .top { overflow-x: clip; }
