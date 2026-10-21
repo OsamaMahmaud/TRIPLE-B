@@ -35,6 +35,19 @@
       el.setAttribute('rel', 'noopener noreferrer');
     }
   });
+
+  document.addEventListener('click', function (event) {
+    var target = event.target;
+    var link = target && target.closest ? target.closest('a[data-link]') : null;
+    if (!link || !link.href || link.getAttribute('href') === '#') return;
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'outbound_link_click',
+      link_type: link.dataset.link,
+      link_label: link.getAttribute('aria-label') || link.textContent.trim()
+    });
+  });
 })();
 
 
